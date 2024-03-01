@@ -8,16 +8,48 @@
 </head>
 <body>
   <div class="main-container">
-    <div class="likes-container">
-      <p id="likes-txt">Antall liker</p>
-      <p id="likes-counter-txt">10 / 10</p>
+    <div class="likes-container">Antall liker: 
+      <span id="likes-counter">10</span>
     </div>
     <div class="button-container">
       <input type="button" value="Kvinner" id="she-btn" />
       <input type="button" value="Menn" id="he-btn" />
       <input type="button" value="Kvinner og Menn" id="mix-btn" />
     </div>
-    <div id="card-container"></div>
+    <div class="cards-container">
+    <div id="random-card-container"></div>
+    <div id="saved-card-container"></div>
     </div>
+  </div>
+  <script>
+//Variabler:
+     //Antall likes
+    const likesCounterTxt = document.getElementById("likes-counter");
+    let likesCounter = 10;
+  //Knapper:
+    const sheBtn = document.getElementById("she-btn");
+    const heBtn = document.getElementById("he-btn");
+    const mixBtn = document.getElementById("mix-btn");
+  //Kontainere:
+    //Kontainer for ett tilfeldig kort 
+    const randomCardContainer = document.getElementById("random-card-container");
+    //Kontainer for korter bruker har lagret
+    const savedCardContainer = document.getElementById("saved-card-container");
+
+    function updateCounter() {
+      likesCounterTxt.textContent = likesCounter;
+    }
+
+    function countLikes(liked) {
+      if (likesCounter > 0) {
+          likesCounter -= 1;
+          updateCounter();
+          fetchRandomProfile();// Denne funksjonen må implementeres til å fetche en ny tilfeldig  profil fra API
+        // Med liked/disliked logikk
+      } else {
+        alert("Du har brukt et begrenset antall profilvalg! Hvis du vil gjenoppta forsøk, må du fjerne profiler fra lista");
+      }
+    }
+  </script>
 </body>
 </html>
