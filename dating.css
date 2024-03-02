@@ -70,5 +70,30 @@ body {
   left: 37%;
   position: relative;
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+
+#random-card-container p:first-of-type {
+  font-size: 25px;
+}
+#random-card-container p {
+  font-size: 16px;
+  margin: 0;
+  margin-top: 10px;
+}
+
+#random-card-container img {
+  width: 65%;
+  border: 2px solid white;
+  border-radius: 15px;
+
+}
+
+
+
+
 
