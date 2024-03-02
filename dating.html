@@ -18,7 +18,11 @@
         <input type="button" value="Kvinner og Menn" id="mix-btn" />
       </div>
       <div class="cards-container">
-        <div id="random-card-container"></div>
+        <div id="random-card-container">
+          <img id="random-card-picture"/>
+          <p id="random-card-name"></p>
+          <p id="random-card-city"></p>
+        </div>
         <div id="saved-card-container"></div>
       </div>
     </div>
@@ -36,6 +40,11 @@
       const randomCardContainer = document.getElementById(
         "random-card-container"
       );
+      const randomCardPicture = document.getElementById("random-card-picture");
+      const randomCardName = document.getElementById("random-card-name");
+      const randomCardCity = document.getElementById("random-card-city");
+
+      
       //Kontainer for korter bruker har lagret
       const savedCardContainer = document.getElementById(
         "saved-card-container"
@@ -49,14 +58,14 @@
         if (likesCounter > 0) {
           likesCounter -= 1;
           updateCounter();
-          fetchRandomProfile(); // Denne funksjonen må implementeres til å fetche en ny tilfeldig  profil fra API
-          // Med liked/disliked logikk
+          getRandomCard(); 
         } else {
           alert(
             "Du har brukt et begrenset antall profilvalg! Hvis du vil gjenoppta forsøk, må du fjerne profiler fra lista"
           );
         }
       }
+
 
       //Hente inn tilfeldig kort
       async function getRandomCard() {
@@ -68,20 +77,14 @@
           console.log(randomCard.results[0].name);
 
            //Hente inn bilde
-           const cardPicture = document.createElement("img");
-          cardPicture.src = randomPerson.picture.large;
-          randomCardContainer.appendChild(cardPicture);
+          randomCardPicture.src = randomPerson.picture.large;
 
 
           //Hente inn navn
-          const cardName = document.createElement("p");
-          cardName.innerText = `${randomPerson.name.first} ${randomPerson.name.last}`;
-          randomCardContainer.appendChild(cardName);
+          randomCardName.innerText = `${randomPerson.name.first} ${randomPerson.name.last}`;
 
           //Hente inn bosted
-          const cardCity = document.createElement("p");
-          cardCity.innerText = `${randomPerson.location.city}, ${randomPerson.location.country}`;
-          randomCardContainer.appendChild(cardCity);
+          randomCardCity.innerText = `${randomPerson.location.city}, ${randomPerson.location.country}`;
 
 
         } catch (error) {
@@ -89,7 +92,21 @@
         }
         
       }
+
       getRandomCard();
+
+      //Like - dislike funksjon
+      document.addEventListener("keydown", function (event) {
+        if (event.keyCode == "37") {
+          getRandomCard()
+          console.log("dislike")
+        } else if (event.keyCode == "39") {
+          console.log("like")
+          countLikes()
+          //Må lage en funksjon for oversikt over likte profiler
+        }
+      });
+
     </script>
   </body>
 </html>
