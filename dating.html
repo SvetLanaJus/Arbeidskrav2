@@ -19,7 +19,7 @@
       </div>
       <div class="cards-container">
         <div id="random-card-container">
-          <img id="random-card-picture"/>
+          <img id="random-card-picture" />
           <p id="random-card-name"></p>
           <p id="random-card-city"></p>
         </div>
@@ -31,6 +31,10 @@
       //Antall likes
       const likesCounterTxt = document.getElementById("likes-counter");
       let likesCounter = 10;
+
+      //Filtervalg
+      let filter = "";
+
       //Knapper:
       const sheBtn = document.getElementById("she-btn");
       const heBtn = document.getElementById("he-btn");
@@ -44,7 +48,6 @@
       const randomCardName = document.getElementById("random-card-name");
       const randomCardCity = document.getElementById("random-card-city");
 
-      
       //Kontainer for korter bruker har lagret
       const savedCardContainer = document.getElementById(
         "saved-card-container"
@@ -58,7 +61,7 @@
         if (likesCounter > 0) {
           likesCounter -= 1;
           updateCounter();
-          getRandomCard(); 
+          getRandomCard();
         } else {
           alert(
             "Du har brukt et begrenset antall profilvalg! Hvis du vil gjenoppta forsøk, må du fjerne profiler fra lista"
@@ -66,47 +69,65 @@
         }
       }
 
-
       //Hente inn tilfeldig kort
       async function getRandomCard() {
         try {
-          const randomCardRequest = await fetch("https://randomuser.me/api/");
+          let randomCardRequest = "";
+          if (filter == "female") {
+            randomCardRequest = await fetch(
+              "https://randomuser.me/api/?gender=female"
+            );
+          } else if (filter == "male") {
+            randomCardRequest = await fetch(
+              "https://randomuser.me/api/?gender=male"
+            );
+          } else {
+            randomCardRequest = await fetch("https://randomuser.me/api/");
+          }
+
           const randomCard = await randomCardRequest.json();
           const randomPerson = randomCard.results[0];
-          console.log(randomCard);
-          console.log(randomCard.results[0].name);
 
-           //Hente inn bilde
+          //Hente inn bilde
           randomCardPicture.src = randomPerson.picture.large;
-
 
           //Hente inn navn
           randomCardName.innerText = `${randomPerson.name.first} ${randomPerson.name.last}`;
 
           //Hente inn bosted
           randomCardCity.innerText = `${randomPerson.location.city}, ${randomPerson.location.country}`;
-
-
         } catch (error) {
           console.log("Feilmelding", error);
         }
-        
       }
 
       getRandomCard();
 
+      //Filtrering av kjønn på datingprofiler
+      sheBtn.onclick = function () {
+        filter = "female";
+        getRandomCard();
+      };
+      heBtn.onclick = function () {
+        filter = "male";
+        getRandomCard();
+      };
+      mixBtn.onclick = function () {
+        filter = "mix";
+        getRandomCard();
+      };
+
       //Like - dislike funksjon
       document.addEventListener("keydown", function (event) {
         if (event.keyCode == "37") {
-          getRandomCard()
-          console.log("dislike")
+          getRandomCard();
+          console.log("dislike");
         } else if (event.keyCode == "39") {
-          console.log("like")
-          countLikes()
+          console.log("like");
+          countLikes();
           //Må lage en funksjon for oversikt over likte profiler
         }
       });
-
     </script>
   </body>
 </html>
