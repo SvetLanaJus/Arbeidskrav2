@@ -147,7 +147,7 @@
           getRandomCard();
         }
       });
-
+      //Uppdating i oversikt over likte profiler
       function updateLikedCards() {
         savedCardContainer.innerHTML = "";
 
@@ -158,6 +158,8 @@
           <p>${card.location.city}</p>`;
 
           savedCardContainer.appendChild(cardElement);
+      
+
         });
       }
     </script>
