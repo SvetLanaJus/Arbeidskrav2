@@ -149,9 +149,7 @@
       document.addEventListener("keydown", function (event) {
         if (event.keyCode == "37") {
           getRandomCard();
-          console.log("dislike");
         } else if (event.keyCode == "39") {
-          console.log("like");
           countLikes();
         }
       });
@@ -166,14 +164,31 @@
           <p>${card.location.city}</p>
           <p>${card.dob.age}</p>
           <button onclick="deleteProfile(${i})">Slett</button>
-          <button>Rediger</button>`;
+          <button onclick="changeProfile(${i})">Rediger</button>`;
 
           savedCardContainer.appendChild(cardElement);
         });
       }
-
+      //Slette likt profil
       function deleteProfile(i) {
         likedCards.splice(i, 1);
+        updateLikedCards();
+      }
+      //Endre likt profil
+      function changeProfile(i) {
+        const changeName = prompt("Endre navn");
+        const changeCity = prompt("Endre bosted");
+        const changeAge = prompt("Endre alder");
+
+        if (changeName !== "") {
+          likedCards[i].name.first = changeName;
+        }
+        if (changeCity !== "") {
+          likedCards[i].location.city = changeCity;
+        }
+        if (changeAge !== "") {
+          likedCards[i].dob.age = changeAge;
+        }
         updateLikedCards();
       }
     </script>
