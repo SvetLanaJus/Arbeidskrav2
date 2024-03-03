@@ -36,7 +36,7 @@
       let filter = "";
 
       //Likte profiler
-      let likedCards =[];
+      let likedCards = [];
 
       //Knapper:
       const sheBtn = document.getElementById("she-btn");
@@ -64,6 +64,23 @@
         if (likesCounter > 0) {
           likesCounter -= 1;
           updateCounter();
+
+          //Likte profiler array
+          likedCards.push({
+            picture: {
+              large: randomCardPicture.src,
+            },
+            name: {
+              first: randomCardName.innerText,
+              last: "",
+            },
+            location: {
+              city: randomCardCity.innerText,
+              country: "",
+            },
+          });
+
+          updateLikedCards();
           getRandomCard();
         } else {
           alert(
@@ -128,23 +145,6 @@
         } else if (event.keyCode == "39") {
           console.log("like");
           countLikes();
-          //Må lage en funksjon for oversikt over likte profiler
-          likedCards.push({
-            picture: {
-              large: randomCardPicture.src,
-            },
-            name: {
-              first: randomCardName.innerText,
-              last: "",
-            },
-            location: {
-              city: randomCardCity.innerText,
-              country: "",
-            },
-          });
-
-          updateLikedCards();
-          getRandomCard();
         }
       });
       //Uppdating i oversikt over likte profiler
@@ -158,8 +158,6 @@
           <p>${card.location.city}</p>`;
 
           savedCardContainer.appendChild(cardElement);
-      
-
         });
       }
     </script>
