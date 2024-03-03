@@ -35,6 +35,9 @@
       //Filtervalg
       let filter = "";
 
+      //Likte profiler
+      let likedCards =[];
+
       //Knapper:
       const sheBtn = document.getElementById("she-btn");
       const heBtn = document.getElementById("he-btn");
@@ -68,14 +71,6 @@
           );
         }
       }
-    
-    function fetchRandomProfile() {
-      // Implementere logikken til å fetche en tilfeldig profil fra API
-      // oppgradere Container med fetched profils info
-    }
-  </script>
-</body>
-</html>
 
       //Hente inn tilfeldig kort
       async function getRandomCard() {
@@ -134,8 +129,37 @@
           console.log("like");
           countLikes();
           //Må lage en funksjon for oversikt over likte profiler
+          likedCards.push({
+            picture: {
+              large: randomCardPicture.src,
+            },
+            name: {
+              first: randomCardName.innerText,
+              last: "",
+            },
+            location: {
+              city: randomCardCity.innerText,
+              country: "",
+            },
+          });
+
+          updateLikedCards();
+          getRandomCard();
         }
       });
+
+      function updateLikedCards() {
+        savedCardContainer.innerHTML = "";
+
+        likedCards.forEach((card) => {
+          const cardElement = document.createElement("div");
+          cardElement.innerHTML = `<img src="${card.picture.large}" alt="${card.name.first}"/>
+          <p>${card.name.first}</p>
+          <p>${card.location.city}</p>`;
+
+          savedCardContainer.appendChild(cardElement);
+        });
+      }
     </script>
   </body>
 </html>
