@@ -124,6 +124,13 @@
 
           //Hente inn alder
           randomCardAge.innerText = `${randomPerson.dob.age}`;
+
+          //Endre farge ut i fra kjønn
+          if (randomPerson.gender == "female") {
+            randomCardContainer.style.backgroundColor = "pink";
+          } else {
+            randomCardContainer.style.backgroundColor = "rgb(194, 244, 244)";
+          }
         } catch (error) {
           console.log("Feilmelding", error);
         }
