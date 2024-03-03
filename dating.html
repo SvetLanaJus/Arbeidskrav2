@@ -22,6 +22,7 @@
           <img id="random-card-picture" />
           <p id="random-card-name"></p>
           <p id="random-card-city"></p>
+          <p id="random-card-age"></p>
         </div>
         <div id="saved-card-container"></div>
       </div>
@@ -50,6 +51,7 @@
       const randomCardPicture = document.getElementById("random-card-picture");
       const randomCardName = document.getElementById("random-card-name");
       const randomCardCity = document.getElementById("random-card-city");
+      const randomCardAge = document.getElementById("random-card-age");
 
       //Kontainer for korter bruker har lagret
       const savedCardContainer = document.getElementById(
@@ -77,6 +79,9 @@
             location: {
               city: randomCardCity.innerText,
               country: "",
+            },
+            dob: {
+              age: randomCardAge.innerText,
             },
           });
 
@@ -116,6 +121,9 @@
 
           //Hente inn bosted
           randomCardCity.innerText = `${randomPerson.location.city}, ${randomPerson.location.country}`;
+
+          //Hente inn alder
+          randomCardAge.innerText = `${randomPerson.dob.age}`;
         } catch (error) {
           console.log("Feilmelding", error);
         }
@@ -151,14 +159,22 @@
       function updateLikedCards() {
         savedCardContainer.innerHTML = "";
 
-        likedCards.forEach((card) => {
+        likedCards.forEach((card, i) => {
           const cardElement = document.createElement("div");
           cardElement.innerHTML = `<img src="${card.picture.large}" alt="${card.name.first}"/>
           <p>${card.name.first}</p>
-          <p>${card.location.city}</p>`;
+          <p>${card.location.city}</p>
+          <p>${card.dob.age}</p>
+          <button onclick="deleteProfile(${i})">Slett</button>
+          <button>Rediger</button>`;
 
           savedCardContainer.appendChild(cardElement);
         });
+      }
+
+      function deleteProfile(i) {
+        likedCards.splice(i, 1);
+        updateLikedCards();
       }
     </script>
   </body>
