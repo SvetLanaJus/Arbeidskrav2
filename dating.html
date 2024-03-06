@@ -37,7 +37,7 @@
       let filter = "";
 
       //Likte profiler
-      let likedCards =[];
+      let likedCards = [];
 
       //Knapper:
       const sheBtn = document.getElementById("she-btn");
@@ -160,6 +160,8 @@
           countLikes();
         }
       });
+      
+      
       //Uppdating i oversikt over likte profiler
       function updateLikedCards() {
         savedCardContainer.innerHTML = "";
@@ -176,6 +178,12 @@
           savedCardContainer.appendChild(cardElement);
       
         });
+        saveLikedCards();
+      }
+
+      function saveLikedCards(likedCards) {
+        localStorage.setItem(`likedCards`, JSON.stringify(likedCards));
+       
       }
       //Slette likt profil
       function deleteProfile(i) {
@@ -184,9 +192,9 @@
       }
       //Endre likt profil
       function changeProfile(i) {
-        const changeName = prompt("Endre navn");
-        const changeCity = prompt("Endre bosted");
-        const changeAge = prompt("Endre alder");
+        const changeName = prompt("Endre navn", likedCards[i].name.first);
+        const changeCity = prompt("Endre bosted", likedCards[i].location.city);
+        const changeAge = prompt("Endre alder", likedCards[i].dob.age);
 
         if (changeName !== "") {
           likedCards[i].name.first = changeName;
