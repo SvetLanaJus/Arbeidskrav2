@@ -176,3 +176,16 @@ input {
   padding: 7px
 
 }
+.pop-up-message:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+	border-right-color: #ffffff;
+	border-left: 0;
+	margin-top: -5px;
+	margin-left: -5px;
+}
