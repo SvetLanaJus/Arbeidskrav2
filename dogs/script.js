@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     card.innerHTML = `
             <div class="dog-img-container">
                 <img src="${dogImage}" alt="Dog Image">
+                <div class="pop-up-message" style="display:none" > </div>
             </div>
             <div class="user-info-container">
                 <img src="${userImage}" class="user-photo" alt="User Image">
@@ -89,6 +90,27 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchRandomUserAndDog();
       });
     }
+
+    //Hundehilsen ved klikk
+    card.addEventListener("click", function () {
+      let randomDogMessage =
+        dogMessage[Math.floor(Math.random() * dogMessage.length)];
+
+      const dogMessageTxt = document.createElement("p");
+      dogMessageTxt.textContent = randomDogMessage;
+      card.querySelector(".pop-up-message").innerHTML = randomDogMessage;
+      card.querySelector(".pop-up-message").style.display = "block";
+
+    });
+    //Hundehilsen Array
+    const dogMessage = [
+      "Voff voff",
+      "Grrr!",
+      "Mjau??",
+      "Voff!",
+      "Voff voff voff!",
+      "WRAFF!!!",
+    ];
 
     cardsContainer.appendChild(card);
   }
