@@ -61,9 +61,23 @@
       function updateCounter() {
         likesCounterTxt.textContent = likesCounter;
       }
-
+      // Funksjon til å sjekke at brukeren har likt 10 eller mer enn 10 profiler
+      function overMaxLikes() {
+        if (likedCards.length >= 10) {
+          alert(
+            "Listen med liked profiles er full! Slett minst en bruker før du kan like flere igjen"
+          );
+          return true;
+        }
+        return false;
+      }
+      //Likes counter
       function countLikes() {
         if (likesCounter > 0) {
+          if (overMaxLikes()) {
+            return;
+          }
+          
           likesCounter -= 1;
           updateCounter();
 
@@ -93,10 +107,12 @@
       }
       // Prompt med oppdatering i likes Counter
       function countLikesUpdate() {
-        if (likesCounter <= 0){
-          const userAnswer = prompt("Du har brukt opp dine poing.Vil du swipe mer? (Ja/Nei)").toLocaleLowerCase();
+        if (likesCounter <= 0) {
+          const userAnswer = prompt(
+            "Du har brukt opp dine poing.Vil du swipe mer? (Ja/Nei)"
+          ).toLocaleLowerCase();
 
-          if (userAnswer == "ja"){
+          if (userAnswer == "ja") {
             likesCounter = 10;
             updateCounter();
             getRandomCard();
@@ -172,8 +188,7 @@
           countLikes();
         }
       });
-      
-      
+
       //Uppdating i oversikt over likte profiler
       function updateLikedCards() {
         savedCardContainer.innerHTML = "";
@@ -188,14 +203,12 @@
           <button onclick="changeProfile(${i})">Rediger</button>`;
 
           savedCardContainer.appendChild(cardElement);
-      
         });
         saveLikedCards();
       }
-
+      //Lagre likt profil i local storage
       function saveLikedCards(likedCards) {
         localStorage.setItem(`likedCards`, JSON.stringify(likedCards));
-       
       }
       //Slette likt profil
       function deleteProfile(i) {
