@@ -62,7 +62,7 @@
         likesCounterTxt.textContent = likesCounter;
       }
 
-      function countLikes(liked) {
+      function countLikes() {
         if (likesCounter > 0) {
           likesCounter -= 1;
           updateCounter();
@@ -88,9 +88,21 @@
           updateLikedCards();
           getRandomCard();
         } else {
-          alert(
-            "Du har brukt et begrenset antall profilvalg! Hvis du vil gjenoppta forsøk, må du fjerne profiler fra lista"
-          );
+          countLikesUpdate();
+        }
+      }
+      // Prompt med oppdatering i likes Counter
+      function countLikesUpdate() {
+        if (likesCounter <= 0){
+          const userAnswer = prompt("Du har brukt opp dine poing.Vil du swipe mer? (Ja/Nei)").toLocaleLowerCase();
+
+          if (userAnswer == "ja"){
+            likesCounter = 10;
+            updateCounter();
+            getRandomCard();
+          } else if (answer == "nei") {
+            countLikesUpdate();
+          }
         }
       }
 
