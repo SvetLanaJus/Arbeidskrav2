@@ -5,6 +5,45 @@ document.addEventListener("DOMContentLoaded", function () {
   const newCardsBtn = document.getElementById("new-cards-btn");
   const breedSearch = document.getElementById("breed-search");
 
+  //chat
+  const chatModal = document.getElementById("chat-modal");
+  const closeChatBtn = document.querySelector(".close-btn");
+  const chatMessages = document.getElementById("chat-messages");
+  const messageInput = document.getElementById("message-input");
+  const sendMessageBtn = document.getElementById("send-message-btn");
+
+  // Closing the chat window when clicking on the cross icon
+  closeChatBtn.addEventListener("click", function () {
+    chatModal.style.display = "none";
+  });
+
+  // Send message
+  sendMessageBtn.addEventListener("click", function () {
+    const messageText = messageInput.value.trim();
+    if (messageText !== "") {
+      addMessage("user", messageText);
+      messageInput.value = ""; // Clearing the input field after sending a message
+    }
+  });
+
+  // Adding a message to the chat window
+  function addMessage(sender, message) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.textContent =
+      sender === "user" ? "Вы: " + message : "Владелец собаки: " + message;
+
+    const deleteButton = document.createElement("span");
+    deleteButton.classList.add("delete-btn");
+    deleteButton.textContent = "×";
+    deleteButton.addEventListener("click", function () {
+      messageElement.remove();
+    });
+
+    messageElement.appendChild(deleteButton);
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scrolling down when adding a new message
+  }
   let debounceTimer;
   breedSearch.addEventListener("input", function () {
     clearTimeout(debounceTimer);
@@ -81,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p>${userLocation}</p>
                 </div>
             </div>
-
+            <button class="chat-btn">Chat</button>
         `;
     if (!isFiltered) {
       card.innerHTML += '<button class="delete-btn">Delete</button>';
@@ -111,10 +150,13 @@ document.addEventListener("DOMContentLoaded", function () {
       "Voff voff voff!",
       "WRAFF!!!",
     ];
-
+    card.querySelector(".chat-btn").addEventListener("click", function () {
+        chatModal.style.display = "block";
+      });
     cardsContainer.appendChild(card);
   }
 
+  
   function loadCardsByBreed(breed) {
     cardsContainer.innerHTML = "";
     fetchRandomUserAndDog(breed);
