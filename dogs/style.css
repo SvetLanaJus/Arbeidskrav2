@@ -149,6 +149,9 @@ input {
 
 .chat-input {
   margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #chat-messages {
@@ -159,6 +162,22 @@ input {
 
 .message {
   margin-bottom: 5px;
+}
+
+#message-input {
+  width: 100%;
+}
+
+#send-message-btn{
+  height: 100%;
+  cursor: pointer;
+  border: none;
+  background-color: #003459;
+  border-radius: 7px;
+  padding: 5px;
+  color: antiquewhite;
+  font-weight: 700;
+  padding: 10px;
 }
 
 .message .delete-btn {
@@ -177,15 +196,15 @@ input {
 
 }
 .pop-up-message:after {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 5px solid transparent;
-	border-right-color: #ffffff;
-	border-left: 0;
-	margin-top: -5px;
-	margin-left: -5px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-right-color: #ffffff;
+    border-left: 0;
+    margin-top: -5px;
+    margin-left: -5px;
 }

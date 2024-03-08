@@ -12,38 +12,43 @@ document.addEventListener("DOMContentLoaded", function () {
   const messageInput = document.getElementById("message-input");
   const sendMessageBtn = document.getElementById("send-message-btn");
 
-  // Closing the chat window when clicking on the cross icon
+
   closeChatBtn.addEventListener("click", function () {
     chatModal.style.display = "none";
+    chatMessages.innerHTML = '';
   });
 
-  // Send message
-  sendMessageBtn.addEventListener("click", function () {
-    const messageText = messageInput.value.trim();
-    if (messageText !== "") {
-      addMessage("user", messageText);
-      messageInput.value = ""; // Clearing the input field after sending a message
-    }
-  });
 
-  // Adding a message to the chat window
-  function addMessage(sender, message) {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-    messageElement.textContent =
-      sender === "user" ? "Вы: " + message : "Владелец собаки: " + message;
+sendMessageBtn.addEventListener("click", function () {
+  const messageText = messageInput.value.trim();
+  if (messageText !== "") {
 
-    const deleteButton = document.createElement("span");
-    deleteButton.classList.add("delete-btn");
-    deleteButton.textContent = "×";
-    deleteButton.addEventListener("click", function () {
-      messageElement.remove();
-    });
-
-    messageElement.appendChild(deleteButton);
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight; // Scrolling down when adding a new message
+    addMessage("user", messageText, "You");
+    messageInput.value = ""; 
   }
+});
+
+
+  function addMessage(sender, message, senderName) {
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("message");
+      messageElement.textContent = senderName + ": " + message;
+
+      if (sender === "user") {
+          const deleteButton = document.createElement("span");
+          deleteButton.classList.add("delete-btn");
+          deleteButton.textContent = "×";
+          deleteButton.addEventListener("click", function () {
+              messageElement.remove();
+          });
+
+          messageElement.appendChild(deleteButton);
+      }
+
+      chatMessages.appendChild(messageElement);
+
+  }
+
   let debounceTimer;
   breedSearch.addEventListener("input", function () {
     clearTimeout(debounceTimer);
@@ -150,11 +155,17 @@ document.addEventListener("DOMContentLoaded", function () {
       "Voff voff voff!",
       "WRAFF!!!",
     ];
-    card.querySelector(".chat-btn").addEventListener("click", function () {
-        chatModal.style.display = "block";
+    
+  card.querySelector(".chat-btn").addEventListener("click", function () {
+          chatModal.style.display = "block";
+          if (!chatMessages.querySelector(".welcome-message")) {
+              addMessage("owner", "Hi! How can I help you?", userName);
+          }
       });
-    cardsContainer.appendChild(card);
+
+      cardsContainer.appendChild(card);
   }
+
 
   
   function loadCardsByBreed(breed) {
