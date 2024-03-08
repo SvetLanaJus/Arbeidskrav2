@@ -12,48 +12,43 @@ document.addEventListener("DOMContentLoaded", function () {
   const messageInput = document.getElementById("message-input");
   const sendMessageBtn = document.getElementById("send-message-btn");
 
-
   closeChatBtn.addEventListener("click", function () {
     chatModal.style.display = "none";
-    chatMessages.innerHTML = '';
+    chatMessages.innerHTML = "";
   });
 
-
-sendMessageBtn.addEventListener("click", function () {
-  const messageText = messageInput.value.trim();
-  if (messageText !== "") {
-
-    addMessage("user", messageText, "You");
-    messageInput.value = ""; 
-  }
-});
-
+  sendMessageBtn.addEventListener("click", function () {
+    const messageText = messageInput.value.trim();
+    if (messageText !== "") {
+      addMessage("user", messageText, "You");
+      messageInput.value = "";
+    }
+  });
 
   function addMessage(sender, message, senderName) {
-      const messageElement = document.createElement("div");
-      messageElement.classList.add("message");
-      messageElement.textContent = senderName + ": " + message;
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.textContent = senderName + ": " + message;
 
-      if (sender === "user") {
-          const deleteButton = document.createElement("span");
-          deleteButton.classList.add("delete-btn");
-          deleteButton.textContent = "×";
-          deleteButton.addEventListener("click", function () {
-              messageElement.remove();
-          });
+    if (sender === "user") {
+      const deleteButton = document.createElement("span");
+      deleteButton.classList.add("delete-btn");
+      deleteButton.textContent = "×";
+      deleteButton.addEventListener("click", function () {
+        messageElement.remove();
+      });
 
-          messageElement.appendChild(deleteButton);
-      }
+      messageElement.appendChild(deleteButton);
+    }
 
-      chatMessages.appendChild(messageElement);
-
+    chatMessages.appendChild(messageElement);
   }
 
   let debounceTimer;
   breedSearch.addEventListener("input", function () {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      const breed = breedSearch.value.trim();
+      const breed = breedSearch.value.trim().toLowerCase();
       if (breed) {
         loadCardsByBreed(breed);
       } else {
@@ -144,7 +139,6 @@ sendMessageBtn.addEventListener("click", function () {
       dogMessageTxt.textContent = randomDogMessage;
       card.querySelector(".pop-up-message").innerHTML = randomDogMessage;
       card.querySelector(".pop-up-message").style.display = "block";
-
     });
     //Hundehilsen Array
     const dogMessage = [
@@ -155,19 +149,17 @@ sendMessageBtn.addEventListener("click", function () {
       "Voff voff voff!",
       "WRAFF!!!",
     ];
-    
-  card.querySelector(".chat-btn").addEventListener("click", function () {
-          chatModal.style.display = "block";
-          if (!chatMessages.querySelector(".welcome-message")) {
-              addMessage("owner", "Hi! How can I help you?", userName);
-          }
-      });
 
-      cardsContainer.appendChild(card);
+    card.querySelector(".chat-btn").addEventListener("click", function () {
+      chatModal.style.display = "block";
+      if (!chatMessages.querySelector(".welcome-message")) {
+        addMessage("owner", "Hi! How can I help you?", userName);
+      }
+    });
+
+    cardsContainer.appendChild(card);
   }
 
-
-  
   function loadCardsByBreed(breed) {
     cardsContainer.innerHTML = "";
     fetchRandomUserAndDog(breed);
