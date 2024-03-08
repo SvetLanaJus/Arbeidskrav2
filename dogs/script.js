@@ -135,8 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let randomDogMessage =
         dogMessage[Math.floor(Math.random() * dogMessage.length)];
 
-      const dogMessageTxt = document.createElement("p");
-      dogMessageTxt.textContent = randomDogMessage;
       card.querySelector(".pop-up-message").innerHTML = randomDogMessage;
       card.querySelector(".pop-up-message").style.display = "block";
     });
