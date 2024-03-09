@@ -214,6 +214,8 @@
       function deleteProfile(i) {
         likedCards.splice(i, 1);
         updateLikedCards();
+        likesCounter++;
+        updateCounter();
       }
       //Endre likt profil
       function changeProfile(i) {
